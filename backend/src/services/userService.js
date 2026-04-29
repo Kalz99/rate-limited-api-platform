@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const userRepository = require('../repositories/userRepository');
-
+const crypto = require('crypto');
 class UserService {
   /**
    * Register a user using the repository
@@ -8,18 +8,29 @@ class UserService {
    * @param {string} email 
    * @param {string} password 
    */
-  async register(username, email, password) {
+  async register(username, email, password, plan) {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
+      const apiKey = crypto.randomBytes(15).toString('hex');
+      let limit;
+      switch (plan.toLowerCase()) {
+        case 'free':
+          limit = 10;
+          break;
+        case 'pro':
+          limit = 500;
+          break;
+      }
 
-      const userId = Date.now().toString();
       const user = {
-        id: userId,
-        PK: `USER#${userId}`,
+        PK: `USER#${email}`,
         SK: "PROFILE",
         username: username,
         email: email,
         password: hashedPassword,
+        apiKey: apiKey,
+        plan: plan.toLowerCase(),
+        limit: limit,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       }

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
-
+const apiRoutes = require('./routes/apiRoutes');
 const app = express();
 
 // Middleware
@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/', authRoutes);
+app.use('/api', apiRoutes);
 
 // Error Handling Middleware (Basic)
 app.use((err, req, res, next) => {

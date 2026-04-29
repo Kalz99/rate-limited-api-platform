@@ -7,21 +7,28 @@ class AuthController {
    */
   register = async (req, res) => {
     try {
-      const { username, email, password } = req.body;
+      const { username, email, password, plan } = req.body;
 
-      const newUser = await userService.register(username, email, password);
-      
+      const newUser = await userService.register(username, email, password, plan);
+
       return res.status(201).json({
         success: true,
         message: 'User registered successfully',
-        user: { id: newUser.id, username: newUser.username, email: newUser.email }
+        user: { id: newUser.pk, username: newUser.username, email: newUser.email }
       });
     } catch (error) {
+      if (error.name === "ConditionalCheckFailedException") {
+        return res.status(400).json({
+          success: false,
+          message: "User already exists"
+        });
+      }
       return res.status(500).json({
         success: false,
         message: 'Registration failed',
         error: error.message
       });
+
     }
   };
 

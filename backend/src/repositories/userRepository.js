@@ -5,11 +5,17 @@ class UserRepository {
   async createUser(user) {
     const params = {
       TableName: "app_data",
-      Item: user
+      Item: user,
+      ConditionExpression: "attribute_not_exists(PK)"
     };
-
-    await dynamoDB.send(new PutCommand(params));
-    return user;
+    try {
+      return await dynamoDB.send(new PutCommand(params));
+    } catch (error) {
+      if (error.name === "ConditionalCheckFailedException") {
+        throw new Error("User already exists");
+      }
+      throw error;
+    }
   }
 
   async findByEmail(email) {
