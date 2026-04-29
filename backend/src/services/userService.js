@@ -10,8 +10,7 @@ class UserService {
    */
   async register(username, email, password) {
     try {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       const userId = Date.now().toString();
       const user = {

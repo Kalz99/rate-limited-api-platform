@@ -1,5 +1,5 @@
 const dynamoDB = require('../config');
-const { PutCommand, GetCommand } = require('@aws-sdk/lib-dynamodb');
+const { PutCommand, QueryCommand } = require('@aws-sdk/lib-dynamodb');
 
 class UserRepository {
   async createUser(user) {
@@ -12,8 +12,18 @@ class UserRepository {
     return user;
   }
 
-  async getUserByEmail(email) {
-    // you'll use GSI later
+  async findByEmail(email) {
+    const params = {
+      TableName: "app_data",
+      IndexName: "EmailIndex",
+      KeyConditionExpression: "email = :email",
+      ExpressionAttributeValues: {
+        ":email": email
+      }
+    };
+
+    const result = await dynamoDB.send(new QueryCommand(params));
+    return result.Items[0]; // Return the first matching user
   }
 }
 
