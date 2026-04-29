@@ -1,14 +1,30 @@
+const bcrypt = require('bcryptjs');
 const userRepository = require('../repositories/userRepository');
 
 class UserService {
   /**
    * Register a user using the repository
-   * @param {Object} userData 
+   * @param {string} username 
+   * @param {string} email 
+   * @param {string} password 
    */
-  async register(userData) {
+  async register(username, email, password) {
     try {
-      // In a real app, you'd hash the password here before saving
-      return await userRepository.create(userData);
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      const userId = Date.now().toString();
+      const user = {
+        id: userId,
+        PK: `USER#${userId}`,
+        SK: "PROFILE",
+        username: username,
+        email: email,
+        password: hashedPassword,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }
+      return await userRepository.createUser(user);
     } catch (error) {
       throw new Error(`Service Error: ${error.message}`);
     }
@@ -22,13 +38,17 @@ class UserService {
   async login(email, password) {
     try {
       const user = await userRepository.findByEmail(email);
-      
+
       if (!user) {
         return null;
       }
 
-      // In a real app, you'd compare the hashed password here
-      // For now, we assume success if a user is found (placeholder logic)
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return null;
+      }
+
       return user;
     } catch (error) {
       throw new Error(`Service Error: ${error.message}`);

@@ -1,22 +1,19 @@
+const dynamoDB = require('../config');
+const { PutCommand, GetCommand } = require('@aws-sdk/lib-dynamodb');
+
 class UserRepository {
-  /**
-   * Find a user by email
-   * @param {string} email 
-   */
-  async findByEmail(email) {
-    // Placeholder for database logic (e.g., this.model.findOne({ email }))
-    console.log(`Searching for user with email: ${email}`);
-    return null; 
+  async createUser(user) {
+    const params = {
+      TableName: "app_data",
+      Item: user
+    };
+
+    await dynamoDB.send(new PutCommand(params));
+    return user;
   }
 
-  /**
-   * Create a new user
-   * @param {Object} userData 
-   */
-  async create(userData) {
-    // Placeholder for database logic (e.g., this.model.create(userData))
-    console.log(`Creating user: ${userData.username}`);
-    return { ...userData, id: Date.now() };
+  async getUserByEmail(email) {
+    // you'll use GSI later
   }
 }
 
