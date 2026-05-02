@@ -1,4 +1,4 @@
-const dynamoDB = require('../config');
+const dynamoDB = require('../../config');
 const { PutCommand, QueryCommand } = require('@aws-sdk/lib-dynamodb');
 
 class UserRepository {

@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const userRepository = require('../repositories/userRepository');
+const userRepository = require('../users/userRepository');
 const crypto = require('crypto');
 class UserService {
   /**
