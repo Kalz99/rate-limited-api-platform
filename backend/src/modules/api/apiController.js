@@ -43,30 +43,68 @@ const validateEmail = async (req, res, next) => {
     }
 };
 
-const checkPassword = (req, res, next) => {
+const checkPassword = async (req, res, next) => {
     try {
         const { password } = req.body;
 
         if (!password) {
             return res.status(400).json({ message: "Password is required" });
         }
+        const cacheKey = `password:${password}`;
 
+        const cachedData = await redis.get(cacheKey);
+
+        if (cachedData) {
+            console.log("CACHE");
+
+            return res.json({
+                success: true,
+                source: "cache",
+                data: JSON.parse(cachedData)
+            });
+        }
         const result = apiService.checkPassword(password);
 
-        res.json({ success: true, data: result });
+        await redis.set(cacheKey, JSON.stringify(result), { EX: 60 });
+
+        res.json({
+            success: true,
+            source: "server",
+            data: result
+        });
+
 
     } catch (err) {
         next(err);
     }
 };
 
-const getIP = (req, res, next) => {
+const getIP = async (req, res, next) => {
     try {
         const { ip } = req.query;
 
-        const result = apiService.getIPInfo(ip || req.ip);
 
-        res.json({ success: true, data: result });
+        const cacheKey = `ip:${ip}`;
+        const cachedData = await redis.get(cacheKey);
+
+        if (cachedData) {
+            console.log("CACHE");
+
+            return res.json({
+                success: true,
+                source: "cache",
+                data: JSON.parse(cachedData)
+            });
+        }
+
+        const result = apiService.getIPInfo(ip || req.ip);
+        await redis.set(cacheKey, JSON.stringify(result), { EX: 60 });
+
+        res.json({
+            success: true,
+            source: "server",
+            data: result
+        });
 
     } catch (err) {
         next(err);
