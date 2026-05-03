@@ -147,18 +147,18 @@ Request
 ```http
 POST /auth/register
 POST /auth/login
-
+```
 ### User
-
+```http
 GET /api/user/me
 GET /api/user/usage
 GET /api/user/usage/history?days=7
 POST /api/user/api-key/regenerate
-
+```
 ### Public APIs(Protected)
-
+```http
 POST /api/email/validate?email=test@gmail.com
 POST /api/password/check
 POST /api/ip/info
-
+```
 
