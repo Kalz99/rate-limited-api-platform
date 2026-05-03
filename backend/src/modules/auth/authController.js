@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const userService = require('../services/userService');
+const userService = require('./authService');
 
 class AuthController {
   /**
