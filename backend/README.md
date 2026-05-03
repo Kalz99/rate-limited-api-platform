@@ -63,7 +63,7 @@ Request
    - Tracks usage:
      ```
      PK: USER#email
-     SK: USAGE#YYYY-MM-DD
+     SK: QUOTA#YYYY-MM-DD
      ```
    - Blocks when limit reached
 
