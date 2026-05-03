@@ -1,6 +1,4 @@
-const jwt = require('jsonwebtoken');
-const userRepository = require('./userRepository');
-
+const userService = require('./userService');
 
 class UserController {
     /**
@@ -8,21 +6,12 @@ class UserController {
      */
     getMe = async (req, res) => {
         try {
-            const user = await userRepository.findByEmail(req.user.email);
+            const user = await userService.getUserProfile(req.user.email);
 
             if (user) {
                 return res.status(200).json({
                     success: true,
-                    user: {
-                        id: user.id,
-                        username: user.username,
-                        email: user.email,
-                        plan: user.plan,
-                        limit: user.limit,
-                        createdAt: user.createdAt,
-                        updatedAt: user.updatedAt,
-                        apiKey: user.apiKey
-                    }
+                    user: user
                 });
             }
 
@@ -42,18 +31,12 @@ class UserController {
 
     getUsage = async (req, res) => {
         try {
-            const user = await userRepository.findByEmail(req.user.email);
+            const usage = await userService.getUserUsage(req.user.email);
 
-            if (user) {
+            if (usage) {
                 return res.status(200).json({
                     success: true,
-                    user: {
-                        username: user.username,
-                        email: user.email,
-                        plan: user.plan,
-                        limit: user.limit,
-                        dailyLimit: user.dailyLimit
-                    }
+                    user: usage
                 });
             }
 
@@ -67,6 +50,38 @@ class UserController {
                 message: 'Failed to get user profile',
                 error: error.message
             });
+        }
+    };
+
+    regenerateApiKey = async (req, res) => {
+        try {
+            const newApiKey = await userService.regenerateApiKey(req.user.email);
+            return res.status(200).json({
+                success: true,
+                apiKey: newApiKey
+            });
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to regenerate API key',
+                error: error.message
+            });
+        }
+    };
+
+    getUsageHistory = async (req, res, next) => {
+        try {
+            const days = parseInt(req.query.days);
+
+            const data = await userService.getUsageHistory(req.user, days);
+
+            res.json({
+                success: true,
+                data
+            });
+
+        } catch (err) {
+            next(err);
         }
     };
 }
