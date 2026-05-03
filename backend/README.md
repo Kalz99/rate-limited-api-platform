@@ -108,7 +108,7 @@ Request
   "SK": "QUOTA#2026-05-03",
   "count": 25
 }
-
+```
 ### Authentication & Security
 
 - **JWT-based Authentication**  
