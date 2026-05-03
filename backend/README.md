@@ -109,7 +109,7 @@ Request
   "count": 25
 }
 
-## Authentication & Security
+### Authentication & Security
 
 - **JWT-based Authentication**  
   Secure user sessions using JSON Web Tokens
@@ -132,7 +132,7 @@ Request
 - **Middleware-based Protection**  
   Layered request validation, authentication, and traffic control
 
-## Tech Stack
+### Tech Stack
 
 - **Backend:** Node.js, Express.js  
 - **Validation:** Zod  
@@ -140,7 +140,7 @@ Request
 - **Database:** Amazon DynamoDB (Single Table Design)  
 - **Caching / Performance:** Redis
 
-## API Endpoints
+### API Endpoints
 
 ### Auth
 
