@@ -25,7 +25,7 @@ jobs:
       - name: Build, tag, and push image to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: node-backend
+          ECR_REPOSITORY: api-platform-backend
           IMAGE_TAG: latest
         run: |
           # Notice we change directory to backend/ for the build context
