@@ -7,6 +7,8 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    outputs:
+      registry: ${{ steps.login-ecr.outputs.registry }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -20,17 +22,18 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push image to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: api-platform-backend
+          # Dynamic Tagging
           IMAGE_TAG: ${{ github.run_number }}
         run: |
-          # Notice we change directory to backend/ for the build context
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./backend
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest ./backend
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
   deploy:
     needs: build-and-push
@@ -43,23 +46,23 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Create/Update .env file on the server
+            # 1. Update .env
             echo "${{ secrets.ENV_FILE }}" > .env
             
-            # Login to ECR on the EC2 instance
-            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | sudo docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }} || true
+            # 2. Login to ECR on EC2 (Note: hardcode the registry or use a secret if possible)
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-            # Pull the latest image
-            sudo docker pull ${{ steps.login-ecr.outputs.registry }}/api-platform-backend:latest
+            # 3. Pull the version we just built
+            sudo docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/api-platform-backend:${{ github.run_number }}
             
-            # Stop and remove the old container if it exists
+            # 4. Stop and remove the container
             sudo docker stop api-platform-backend || true
             sudo docker rm api-platform-backend || true
             
-            # Run the new container
+            # 5. Run the new version
             sudo docker run -d \
               --name api-platform-backend \
               --restart always \
               --env-file .env \
               -p 5000:5000 \
-              ${{ steps.login-ecr.outputs.registry }}/node-backend:latest
+              ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/api-platform-backend:${{ github.run_number }}
