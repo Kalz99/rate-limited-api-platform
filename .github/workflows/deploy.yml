@@ -46,8 +46,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             
-            echo "${{ secrets.ENV_FILE }}" > /home/ubuntu/.env
-            
+            $cat <<EOF > /home/ubuntu/.env
+            ${{ secrets.ENV_FILE }}
+            EOF
            
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | sudo docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
             
