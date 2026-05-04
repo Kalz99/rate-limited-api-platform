@@ -26,7 +26,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: api-platform-backend
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.run_number }}
         run: |
           # Notice we change directory to backend/ for the build context
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./backend
