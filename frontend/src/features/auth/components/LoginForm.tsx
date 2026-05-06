@@ -1,6 +1,7 @@
-// LoginForm.jsx
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { Input } from "@/components/Input";
+import { Button } from "@/components/Button";
 
 export default function LoginForm() {
     const { loginUser, loading } = useAuth();
@@ -20,16 +21,24 @@ export default function LoginForm() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input
+            <Input
+                label="Email"
                 placeholder="email"
+                value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
-            <input
+            <Input
+                label="Password"
                 type="password"
                 placeholder="password"
+                value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
-            <button disabled={loading}>Login</button>
+            <div className="mt-8">
+                <Button type="submit" loading={loading}>
+                    Login
+                </Button>
+            </div>
         </form>
     );
 }
