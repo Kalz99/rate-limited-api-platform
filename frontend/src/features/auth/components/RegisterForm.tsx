@@ -3,20 +3,22 @@ import { useAuth } from "../hooks/useAuth";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 import { Label } from "@/components/Label";
+import { useToast } from "@/context/ToastContext";
 
 export default function RegisterForm() {
     const [form, setForm] = useState({ name: "", email: "", password: "", plan: "free" });
     const { registerUser, loading } = useAuth();
+    const { showToast } = useToast();
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
             const result = await registerUser(form);
             if (result) {
-                alert("Registered successfully");
+                showToast("Account created successfully!", "success");
             }
         } catch (error) {
-            alert("Registration failed");
+            showToast("Registration failed. Please try again.", "error");
         }
     };
 
