@@ -18,5 +18,17 @@ export const useAuth = () => {
         }
     };
 
-    return { loginUser, loading };
+    const registerUser = async (data: any) => {
+        try {
+            setLoading(true);
+            const res = await authApi.register(data);
+
+
+            return res.data;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { loginUser, registerUser, loading };
 };

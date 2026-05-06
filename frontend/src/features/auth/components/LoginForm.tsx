@@ -6,7 +6,7 @@ export default function LoginForm() {
     const { loginUser, loading } = useAuth();
     const [form, setForm] = useState({ email: "", password: "" });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
             const result = await loginUser(form);
