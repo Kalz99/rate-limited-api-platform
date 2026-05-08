@@ -1,6 +1,36 @@
 import { NavBar } from "../../../components/NavBar";
+import { StatCard } from "../components/StatCard";
+import { StatCardProps } from "../types";
+import { Zap, BarChart3, History } from "lucide-react";
 
 export const Dashboard = () => {
+    const stats: StatCardProps[] = [
+        {
+            title: "API Requests",
+            description: "Real-time throughput. Your current plan allows a maximum of 5 requests per minute.",
+            icon: <Zap size={20} />,
+            value: "3",
+            suffix: "per minute",
+            trend: { value: "Normal", isPositive: true }
+        },
+        {
+            title: "API Requests",
+            description: "Daily aggregate volume. You are restricted to 20 total requests per 24-hour period.",
+            icon: <BarChart3 size={20} />,
+            value: "14",
+            suffix: "today",
+            trend: { value: "70%", isPositive: true }
+        },
+        {
+            title: "API Requests",
+            description: "Historical data overview. Total cumulative requests processed since monitoring began.",
+            icon: <History size={20} />,
+            value: "1.2k",
+            suffix: "all time",
+            trend: { value: "Stable", isPositive: true }
+        }
+    ];
+
     return (
         <div className="flex min-h-screen bg-[var(--bg)]">
             <NavBar />
@@ -9,15 +39,8 @@ export const Dashboard = () => {
 
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {/* Placeholder for dashboard cards */}
-                        {[1, 2, 3].map((i) => (
-                            <div key={i} className="p-6 rounded-2xl bg-[var(--bg)] border border-[var(--border)] shadow-sm hover:shadow-md transition-shadow">
-                                <div className="h-12 w-12 rounded-xl bg-[var(--accent-bg)] flex items-center justify-center text-[var(--accent)] mb-4">
-                                    <div className="h-6 w-6 bg-current rounded-md opacity-20" />
-                                </div>
-                                <h3 className="text-lg font-semibold text-[var(--text-h)]">Stat Card {i}</h3>
-                                <p className="text-sm text-[var(--text)] mt-2">Some useful information about your API usage and performance metrics.</p>
-                            </div>
+                        {stats.map((stat, i) => (
+                            <StatCard key={i} {...stat} />
                         ))}
                     </div>
                 </div>
@@ -25,3 +48,4 @@ export const Dashboard = () => {
         </div>
     );
 };
+
