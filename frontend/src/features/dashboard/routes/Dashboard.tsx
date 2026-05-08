@@ -1,5 +1,6 @@
 import { NavBar } from "../../../components/NavBar";
 import { StatCard } from "../components/StatCard";
+import { DaysChart } from "../components/DaysChart";
 import { StatCardProps } from "../types";
 import { Zap, BarChart3, History } from "lucide-react";
 
@@ -35,17 +36,22 @@ export const Dashboard = () => {
         <div className="flex min-h-screen bg-[var(--bg)]">
             <NavBar />
             <main className="flex-1 ml-64 p-8">
-                <div className="max-w-7xl mx-auto">
-
-
+                <div className="max-w-[1600px] mx-auto space-y-8">
+                    {/* Top Row: Stat Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {stats.map((stat, i) => (
                             <StatCard key={i} {...stat} />
                         ))}
+                    </div>
+
+                    {/* Bottom Row: Chart */}
+                    <div className="w-full">
+                        <DaysChart />
                     </div>
                 </div>
             </main>
         </div>
     );
 };
+
 
