@@ -7,7 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button: React.FC<ButtonProps> = ({ children, loading, disabled, copy, variant = 'primary', ...props }) => {
-    const bgColor = variant === 'secondary' ? 'bg-slate-700 hover:bg-slate-600' : 'bg-indigo-600 hover:bg-indigo-500';
+    const bgColor = variant === 'secondary' ? 'bg-slate-700 hover:bg-slate-600' : 'bg-[var(--accent)] hover:opacity-90';
     
     return (
         <button
@@ -18,7 +18,7 @@ export const Button: React.FC<ButtonProps> = ({ children, loading, disabled, cop
                 disabled:opacity-50 disabled:cursor-not-allowed
                 flex items-center justify-center gap-2
                 ${bgColor}
-                shadow-[0_0_20px_rgba(79,70,229,0.2)]
+                shadow-lg shadow-[var(--accent)]/20
                 ${props.className || ''}
             `}
             {...props}
