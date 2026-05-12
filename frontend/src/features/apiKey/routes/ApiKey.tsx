@@ -24,7 +24,7 @@ export const ApiKey: React.FC = () => {
                         title="API key"
                         apiKey="sk_live_51P2vG6I9jK3mN7b8Q4r5t6y7u8i9o0p"
                         copyButton={
-                            <Button copy>
+                            <Button>
                                 <Copy size={20} />
                                 Copy Key
                             </Button>

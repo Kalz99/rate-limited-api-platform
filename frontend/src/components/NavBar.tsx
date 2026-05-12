@@ -20,7 +20,7 @@ export const NavBar: React.FC = () => {
 
     return (
         <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r border-[var(--border)] bg-[var(--bg)] transition-transform sm:translate-x-0">
-            <div className="flex h-full flex-col px-3 py-4 overflow-y-auto">
+            <div className="flex h-full flex-col px-3 pt-8 pb-4 overflow-y-auto">
                 <div className="mb-10 flex items-center gap-3 px-2">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/20">
                         <Database size={24} />

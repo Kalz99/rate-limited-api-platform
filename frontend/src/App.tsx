@@ -4,9 +4,9 @@ import { Login } from "./features/auth/routes/Login";
 import { Dashboard } from "./features/dashboard/routes/Dashboard";
 import { ApiKey } from "./features/apiKey/routes/ApiKey";
 import { ApiDocumentation } from "./features/apiDocumentation/routes/ApiDocumentation";
+import { ApiSimulation } from "./features/apiSimulation/routes/ApiSimulation";
 import { ToastProvider } from "./context/ToastContext";
 import { Toast } from "./components/Toast";
-
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/api-key" element={<ApiKey />} />
           <Route path="/api-details" element={<ApiDocumentation />} />
+          <Route path="/api-simulation" element={<ApiSimulation />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
