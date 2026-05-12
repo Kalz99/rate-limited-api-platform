@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Home, Database, Settings, LogOut, ChevronRight, Key } from 'lucide-react';
+import { Home, Database, Settings, LogOut, ChevronRight, Key, Play } from 'lucide-react';
 
 export const NavBar: React.FC = () => {
     const navigate = useNavigate();
@@ -14,6 +14,7 @@ export const NavBar: React.FC = () => {
         { label: 'Home', path: '/', icon: <Home size={15} /> },
         { label: 'API Key', path: '/api-key', icon: <Key size={15} /> },
         { label: 'API Details', path: '/api-details', icon: <Database size={15} /> },
+        { label: 'API Simulation', path: '/api-simulation', icon: <Play size={15} /> },
         { label: 'Settings', path: '/settings', icon: <Settings size={15} /> },
     ];
 

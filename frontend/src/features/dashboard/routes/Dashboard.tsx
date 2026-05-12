@@ -36,7 +36,17 @@ export const Dashboard = () => {
         <div className="flex min-h-screen bg-[var(--bg)]">
             <NavBar />
             <main className="flex-1 ml-64 p-8">
-                <div className="max-w-[1600px] mx-auto space-y-8">
+                <div className="max-w-5xl mx-auto space-y-8">
+                    {/* Header Section */}
+                    <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
+                        <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
+                            Usage Dashboard
+                        </h2>
+                        <p className="text-lg text-[var(--text)] max-w-3xl">
+                            Monitor your API consumption and rate-limit status in real-time.
+                        </p>
+                    </div>
+
                     {/* Top Row: Stat Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {stats.map((stat, i) => (

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ChevronDown, ChevronUp, Globe, Clock } from 'lucide-react';
 import { EndpointCardProps } from '../types';
+import { useToggle } from '../hooks/useToggle';
 
 export const EndpointCard: React.FC<EndpointCardProps> = ({
     name,
@@ -12,7 +13,7 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({
     exampleResponse,
     statusCodes = []
 }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, toggleExpanded] = useToggle(false);
 
     const methodColors = {
         GET: 'bg-green-500/10 text-green-500 border-green-500/20',
@@ -31,7 +32,7 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({
             {/* Header (Always Visible) */}
             <div 
                 className="p-5 cursor-pointer flex items-center justify-between gap-4 group"
-                onClick={() => setIsExpanded(!isExpanded)}
+                onClick={toggleExpanded}
             >
                 <div className="flex items-center gap-4 flex-1">
                     <div className={`px-3 py-1 rounded-lg text-xs font-bold border ${methodColors[method]}`}>

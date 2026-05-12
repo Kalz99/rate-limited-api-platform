@@ -9,12 +9,12 @@ export const ApiKey: React.FC = () => {
         <div className="flex min-h-screen bg-[var(--bg)]">
             <NavBar />
             <main className="flex-1 ml-64 p-8">
-                <div className="max-w-4xl mx-auto space-y-8">
-                    <div className="flex flex-col gap-2">
-                        <h2 className="text-2xl font-black text-[var(--text-h)] tracking-tighter">
+                <div className="max-w-5xl mx-auto space-y-8">
+                    <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
+                        <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
                             API Authentication
                         </h2>
-                        <p className="text-lg text-[var(--text)]">
+                        <p className="text-lg text-[var(--text)] max-w-3xl">
                             Manage your secret keys to authenticate requests to our API.
                         </p>
                     </div>
