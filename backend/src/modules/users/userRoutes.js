@@ -9,5 +9,6 @@ router.get('/me', authMiddleware, userController.getMe);
 router.get('/usage', authMiddleware, userController.getUsage);
 router.post('/regenerate-api-key', authMiddleware, userController.regenerateApiKey);
 router.get('/usage/history', authMiddleware, userController.getUsageHistory);
+router.get('/usage/today', authMiddleware, userController.getUsageToday);
 
 module.exports = router;

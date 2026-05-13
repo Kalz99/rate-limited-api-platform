@@ -98,6 +98,15 @@ class UserService {
             throw new Error(`Service Error: ${error.message}`);
         }
     }
+
+    async getUsageToday(user) {
+        try {
+            const usage = await userRepository.getUsage(user.email, new Date().toISOString().split('T')[0]);
+            return usage;
+        } catch (error) {
+            throw new Error(`Service Error: ${error.message}`);
+        }
+    }
 }
 
 module.exports = new UserService();
