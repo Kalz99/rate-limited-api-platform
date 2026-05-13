@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
@@ -7,6 +8,7 @@ import { useToast } from "@/context/ToastContext";
 export default function LoginForm() {
     const { loginUser, loading } = useAuth();
     const { showToast } = useToast();
+    const navigate = useNavigate();
     const [form, setForm] = useState({ email: "", password: "" });
 
     const handleSubmit = async (e: any) => {
@@ -15,6 +17,7 @@ export default function LoginForm() {
             const result = await loginUser(form);
             if (result) {
                 showToast("Logged in successfully!", "success");
+                navigate("/");
             }
         } catch (error) {
             showToast("Login failed. Please check your credentials.", "error");
