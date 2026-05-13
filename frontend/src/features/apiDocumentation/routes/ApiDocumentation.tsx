@@ -6,77 +6,86 @@ import { EndpointCardProps } from '../types';
 export const ApiDocumentation: React.FC = () => {
     const endpoints: EndpointCardProps[] = [
         {
-            name: "Get User Profile",
-            description: "Retrieves the detailed profile information for the authenticated user, including subscription status and usage metrics.",
-            method: "GET",
-            url: "/api/v1/user/profile",
+            name: "Email Validation",
+            description: "Verifies if an email address is valid and returns its domain information.",
+            method: "POST",
+            url: "/api/email/validate",
             parameters: [
-                { name: "userId", type: "string", required: true, description: "The unique identifier of the user." },
-                { name: "includeStats", type: "boolean", required: false, description: "Whether to include detailed usage statistics." }
+                { name: "email", type: "string", required: true, description: "The email address to validate (passed as a query parameter)." }
             ],
             headers: {
-                "Authorization": "Bearer <your_api_key>",
+                "x-api-key": "<your_api_key>",
                 "Content-Type": "application/json"
             },
             exampleResponse: {
-                "status": "success",
+                "success": true,
+                "source": "server",
                 "data": {
-                    "id": "user_12345",
                     "email": "user@example.com",
-                    "plan": "premium",
-                    "usage": {
-                        "daily": 45,
-                        "monthly": 1200
-                    }
+                    "valid": true,
+                    "domain": "example.com"
                 }
             },
             statusCodes: [
-                { code: 200, description: "Successfully retrieved profile." },
-                { code: 401, description: "Unauthorized - Invalid API key." }
+                { code: 200, description: "Successfully validated email." },
+                { code: 400, description: "Bad Request - Email is required." },
+                { code: 401, description: "Unauthorized - API key required." },
+                { code: 403, description: "Forbidden - Invalid API key." },
+                { code: 429, description: "Too Many Requests - Rate limit or daily quota exceeded." }
             ]
         },
         {
-            name: "Create API Key",
-            description: "Generates a new API key for the user. Note that this will invalidate any existing keys if the limit is reached.",
+            name: "Password Strength Check",
+            description: "Evaluates the strength of a password based on length and character variety.",
             method: "POST",
-            url: "/api/v1/auth/keys",
+            url: "/api/password/check",
             parameters: [
-                { name: "name", type: "string", required: true, description: "A descriptive name for the API key." },
-                { name: "expiresIn", type: "number", required: false, description: "Expiration time in seconds (default: never)." }
+                { name: "password", type: "string", required: true, description: "The password to evaluate (passed in the request body)." }
             ],
             headers: {
-                "Authorization": "Bearer <your_api_key>",
+                "x-api-key": "<your_api_key>",
                 "Content-Type": "application/json"
             },
             exampleResponse: {
-                "status": "created",
-                "key": "sk_live_51P2vG6I9jK3mN7b8Q4r5t6y7u8i9o0p",
-                "created_at": "2026-05-09T15:23:57Z"
+                "success": true,
+                "source": "server",
+                "data": {
+                    "strength": "strong",
+                    "score": 3
+                }
             },
             statusCodes: [
-                { code: 201, description: "Key created successfully." },
-                { code: 400, description: "Bad Request - Invalid parameters." },
-                { code: 429, description: "Too Many Requests - Rate limit exceeded." }
+                { code: 200, description: "Successfully evaluated password." },
+                { code: 400, description: "Bad Request - Password is required." },
+                { code: 401, description: "Unauthorized - API key required." },
+                { code: 429, description: "Too Many Requests - Rate limit or daily quota exceeded." }
             ]
         },
         {
-            name: "Delete Record",
-            description: "Permanently deletes a specific data record from the platform. This action is irreversible.",
-            method: "DELETE",
-            url: "/api/v1/data/records/{recordId}",
+            name: "IP Information",
+            description: "Retrieves location information for a given IP address. Defaults to the requester's IP if none provided.",
+            method: "POST",
+            url: "/api/ip/info",
             parameters: [
-                { name: "recordId", type: "string", required: true, description: "The ID of the record to delete." }
+                { name: "ip", type: "string", required: false, description: "The IP address to look up (passed as a query parameter)." }
             ],
             headers: {
-                "Authorization": "Bearer <your_api_key>"
+                "x-api-key": "<your_api_key>",
+                "Content-Type": "application/json"
             },
             exampleResponse: {
-                "status": "deleted",
-                "message": "Record successfully removed."
+                "success": true,
+                "source": "server",
+                "data": {
+                    "ip": "8.8.8.8",
+                    "country": "United States",
+                    "city": "Mountain View"
+                }
             },
             statusCodes: [
-                { code: 200, description: "Record deleted." },
-                { code: 404, description: "Not Found - Record does not exist." }
+                { code: 200, description: "Successfully retrieved IP info." },
+                { code: 401, description: "Unauthorized - API key required." },
+                { code: 429, description: "Too Many Requests - Rate limit or daily quota exceeded." }
             ]
         }
     ];
@@ -93,7 +102,7 @@ export const ApiDocumentation: React.FC = () => {
                     </p>
                 </div>
 
-                <div className="space-y-6 max-w-4xl mx-auto">
+                <div className="space-y-6 max-w-6xl mx-auto">
                     {endpoints.map((endpoint, i) => (
                         <EndpointCard key={i} {...endpoint} />
                     ))}
