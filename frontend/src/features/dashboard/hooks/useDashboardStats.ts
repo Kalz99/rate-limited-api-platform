@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { getUsage } from "../api/dashboardApi";
+import { getUsage, getTodayUsage } from "../api/dashboardApi";
 
 interface UsageStats {
     limit: number;
     usage: number;
+    todayUsage: number;
 }
 
 interface UseDashboardStatsReturn {
@@ -21,11 +22,15 @@ export const useDashboardStats = (): UseDashboardStatsReturn => {
         const fetchStats = async () => {
             try {
                 setLoading(true);
-                const res = await getUsage();
-                const user = res.data;
+                const [usageRes, todayRes] = await Promise.all([
+                    getUsage(),
+                    getTodayUsage()
+                ]);
+
                 setStats({
-                    limit: res.data.user.limit,
-                    usage: res.data.user.usage,
+                    limit: usageRes.data.user.limit,
+                    usage: usageRes.data.user.usage,
+                    todayUsage: todayRes.data.data || 0,
                 });
             } catch (err) {
                 setError("Failed to load usage stats.");

@@ -4,6 +4,10 @@ export const getUsage = () => {
     return apiClient.get("/usage");
 };
 
+export const getTodayUsage = () => {
+    return apiClient.get("/usage/today");
+};
+
 export const getUsageHistory = (days: number = 7) => {
     return apiClient.get(`/usage/history?days=${days}`);
 };

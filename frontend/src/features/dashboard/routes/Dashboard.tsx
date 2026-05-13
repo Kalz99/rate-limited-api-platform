@@ -2,35 +2,64 @@ import { DashboardLayout } from "../../../components/DashboardLayout";
 import { StatCard } from "../components/StatCard";
 import { DaysChart } from "../components/DaysChart";
 import { StatCardProps } from "../types";
-import { Zap, BarChart3, History } from "lucide-react";
+import { Zap, BarChart3, History, Loader2 } from "lucide-react";
+import { useDashboardStats } from "../hooks/useDashboardStats";
 
 export const Dashboard = () => {
-    const stats: StatCardProps[] = [
+    const { stats, loading, error } = useDashboardStats();
+
+    const displayStats: StatCardProps[] = [
         {
-            title: "API Requests",
-            description: "Real-time throughput. Your current plan allows a maximum of 5 requests per minute.",
+            title: "Plan Limit",
+            description: "Your current plan's rate limit. This is the maximum number of requests you can make.",
             icon: <Zap size={20} />,
-            value: "3",
-            suffix: "per minute",
-            trend: { value: "Normal", isPositive: true }
+            value: stats?.limit?.toString() || "0",
+            suffix: "requests",
+            trend: { value: "Fixed", isPositive: true }
         },
         {
-            title: "API Requests",
-            description: "Daily aggregate volume. You are restricted to 20 total requests per 24-hour period.",
+            title: "Today's Usage",
+            description: "Number of API requests processed in the last 24 hours.",
             icon: <BarChart3 size={20} />,
-            value: "14",
+            value: stats?.todayUsage?.toString() || "0",
             suffix: "today",
-            trend: { value: "70%", isPositive: true }
+            trend: { value: "Live", isPositive: true }
         },
         {
-            title: "API Requests",
-            description: "Historical data overview. Total cumulative requests processed since monitoring began.",
+            title: "Total Usage",
+            description: "Total cumulative requests made during the current billing or reset period.",
             icon: <History size={20} />,
-            value: "1.2k",
+            value: stats?.usage?.toString() || "0",
             suffix: "all time",
-            trend: { value: "Stable", isPositive: true }
+            trend: { value: stats && stats.limit > 0 ? `${Math.round((stats.usage / stats.limit) * 100)}%` : "0%", isPositive: true }
         }
     ];
+
+    if (loading) {
+        return (
+            <DashboardLayout>
+                <div className="flex items-center justify-center h-[60vh]">
+                    <Loader2 className="animate-spin text-[var(--accent)]" size={40} />
+                </div>
+            </DashboardLayout>
+        );
+    }
+
+    if (error) {
+        return (
+            <DashboardLayout>
+                <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+                    <p className="text-red-500 font-medium">{error}</p>
+                    <button 
+                        onClick={() => window.location.reload()}
+                        className="px-4 py-2 bg-[var(--accent)] text-white rounded-lg hover:opacity-90 transition-opacity"
+                    >
+                        Retry
+                    </button>
+                </div>
+            </DashboardLayout>
+        );
+    }
 
     return (
         <DashboardLayout>
@@ -47,7 +76,7 @@ export const Dashboard = () => {
 
                 {/* Top Row: Stat Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {stats.map((stat, i) => (
+                    {displayStats.map((stat, i) => (
                         <StatCard key={i} {...stat} />
                     ))}
                 </div>
@@ -60,5 +89,3 @@ export const Dashboard = () => {
         </DashboardLayout>
     );
 };
-
-
