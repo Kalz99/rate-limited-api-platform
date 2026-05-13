@@ -3,8 +3,21 @@ import { DashboardLayout } from '../../../components/DashboardLayout';
 import { CardView } from '../components/CardView';
 import { Button } from '../../../components/Button';
 import { Copy, RefreshCcw } from 'lucide-react';
+import { useApiKey } from '../hooks/useApiKey';
+
+import { useToast } from '../../../context/ToastContext';
 
 export const ApiKey: React.FC = () => {
+    const { apiKey, loading, regenerating, error, regenerate } = useApiKey();
+    const { showToast } = useToast();
+
+    const handleCopy = () => {
+        if (apiKey) {
+            navigator.clipboard.writeText(apiKey);
+            showToast("API key copied to clipboard", "success");
+        }
+    };
+
     return (
         <DashboardLayout>
             <div className="max-w-6xl mx-auto space-y-8">
@@ -21,17 +34,24 @@ export const ApiKey: React.FC = () => {
                     {/* API Key Card View Component */}
                     <CardView
                         title="API key"
-                        apiKey="sk_live_51P2vG6I9jK3mN7b8Q4r5t6y7u8i9o0p"
+                        apiKey={loading ? "Loading..." : regenerating ? "Regenerating..." : error ? "Error loading key" : apiKey || "No key found"}
                         copyButton={
-                            <Button>
+                            <Button 
+                                onClick={handleCopy}
+                                disabled={loading || regenerating || !!error || !apiKey}
+                            >
                                 <Copy size={20} />
                                 Copy Key
                             </Button>
                         }
                         regenerateButton={
-                            <Button variant="secondary">
-                                <RefreshCcw size={20} />
-                                Regenerate
+                            <Button 
+                                variant="secondary" 
+                                onClick={regenerate}
+                                disabled={loading || regenerating || !!error}
+                            >
+                                <RefreshCcw size={20} className={regenerating ? "animate-spin" : ""} />
+                                {regenerating ? "Regenerating..." : "Regenerate"}
                             </Button>
                         }
                     />
