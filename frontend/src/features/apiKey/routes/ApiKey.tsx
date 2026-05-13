@@ -30,13 +30,13 @@ export const ApiKey: React.FC = () => {
                     </p>
                 </div>
 
-                <div className="max-w-3xl mx-auto w-full space-y-8">
+                <div className="space-y-6 max-w-6xl mx-auto">
                     {/* API Key Card View Component */}
                     <CardView
                         title="API key"
                         apiKey={loading ? "Loading..." : regenerating ? "Regenerating..." : error ? "Error loading key" : apiKey || "No key found"}
                         copyButton={
-                            <Button 
+                            <Button
                                 onClick={handleCopy}
                                 disabled={loading || regenerating || !!error || !apiKey}
                             >
@@ -45,8 +45,8 @@ export const ApiKey: React.FC = () => {
                             </Button>
                         }
                         regenerateButton={
-                            <Button 
-                                variant="secondary" 
+                            <Button
+                                variant="secondary"
                                 onClick={regenerate}
                                 disabled={loading || regenerating || !!error}
                             >

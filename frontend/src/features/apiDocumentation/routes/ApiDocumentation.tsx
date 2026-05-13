@@ -9,7 +9,7 @@ export const ApiDocumentation: React.FC = () => {
             name: "Email Validation",
             description: "Verifies if an email address is valid and returns its domain information.",
             method: "POST",
-            url: "/api/email/validate",
+            url: "http://54.177.105.15:5000/api/email/validate",
             parameters: [
                 { name: "email", type: "string", required: true, description: "The email address to validate (passed as a query parameter)." }
             ],
@@ -38,7 +38,7 @@ export const ApiDocumentation: React.FC = () => {
             name: "Password Strength Check",
             description: "Evaluates the strength of a password based on length and character variety.",
             method: "POST",
-            url: "/api/password/check",
+            url: "http://54.177.105.15:5000/api/password/check",
             parameters: [
                 { name: "password", type: "string", required: true, description: "The password to evaluate (passed in the request body)." }
             ],
@@ -65,7 +65,7 @@ export const ApiDocumentation: React.FC = () => {
             name: "IP Information",
             description: "Retrieves location information for a given IP address. Defaults to the requester's IP if none provided.",
             method: "POST",
-            url: "/api/ip/info",
+            url: "http://54.177.105.15:5000/api/ip/info",
             parameters: [
                 { name: "ip", type: "string", required: false, description: "The IP address to look up (passed as a query parameter)." }
             ],

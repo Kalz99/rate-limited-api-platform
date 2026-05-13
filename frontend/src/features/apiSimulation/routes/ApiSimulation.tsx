@@ -29,7 +29,7 @@ export const ApiSimulation: React.FC = () => {
                 </div>
 
 
-                <div className="max-w-5xl mx-auto w-full space-y-8">
+                <div className="space-y-6 max-w-6xl mx-auto">
                     <ApiTabs
                         options={apiOptions}
                         selected={selectedApi}
