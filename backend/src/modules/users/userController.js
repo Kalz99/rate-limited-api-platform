@@ -84,6 +84,20 @@ class UserController {
             next(err);
         }
     };
+
+    getUsageToday = async (req, res, next) => {
+        try {
+            const data = await userService.getUsageToday(req.user);
+
+            res.json({
+                success: true,
+                data
+            });
+
+        } catch (err) {
+            next(err);
+        }
+    };
 }
 
 module.exports = new UserController();
