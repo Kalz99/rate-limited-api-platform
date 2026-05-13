@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { Input } from "@/components/Input";
+
+import { useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/Button";
 import { Label } from "@/components/Label";
 import { useToast } from "@/context/ToastContext";
@@ -8,6 +11,9 @@ import { useToast } from "@/context/ToastContext";
 export default function RegisterForm() {
     const [form, setForm] = useState({ name: "", email: "", password: "", plan: "free" });
     const { registerUser, loading } = useAuth();
+
+    const navigate = useNavigate();
+
     const { showToast } = useToast();
 
     const handleSubmit = async (e: any) => {
@@ -16,6 +22,8 @@ export default function RegisterForm() {
             const result = await registerUser(form);
             if (result) {
                 showToast("Account created successfully!", "success");
+                navigate("/login");
+
             }
         } catch (error) {
             showToast("Registration failed. Please try again.", "error");
@@ -53,9 +61,11 @@ export default function RegisterForm() {
                         relative flex flex-col p-5 cursor-pointer border rounded-2xl transition-all duration-300
                         ${form.plan === 'free' ? 'border-indigo-500 bg-indigo-500/10 ring-1 ring-indigo-500/50' : 'border-slate-800 bg-slate-950/30 hover:border-slate-700'}
                     `}>
-                        <input 
+
+                        <input
                             type="radio" name="plan" value="free" checked={form.plan === 'free'}
-                            onChange={(e) => setForm({...form, plan: e.target.value})}
+                            onChange={(e) => setForm({ ...form, plan: e.target.value })}
+
                             className="sr-only"
                         />
                         <div className="flex justify-between items-center">
@@ -73,15 +83,19 @@ export default function RegisterForm() {
                             </p>
                         </div>
                     </label>
-                    
+
+
+
                     {/* Pro Plan */}
                     <label className={`
                         relative flex flex-col p-5 cursor-pointer border rounded-2xl transition-all duration-300
                         ${form.plan === 'pro' ? 'border-indigo-500 bg-indigo-500/10 ring-1 ring-indigo-500/50' : 'border-slate-800 bg-slate-950/30 hover:border-slate-700'}
                     `}>
-                        <input 
+
+                        <input
                             type="radio" name="plan" value="pro" checked={form.plan === 'pro'}
-                            onChange={(e) => setForm({...form, plan: e.target.value})}
+                            onChange={(e) => setForm({ ...form, plan: e.target.value })}
+
                             className="sr-only"
                         />
                         <div className="flex justify-between items-center">

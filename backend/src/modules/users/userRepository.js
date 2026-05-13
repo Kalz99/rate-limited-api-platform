@@ -64,6 +64,21 @@ class UserRepository {
     const result = await dynamoDB.send(new QueryCommand(params));
     return result.Items || [];
   }
+
+  async getUsage(email, date) {
+    const params = {
+      TableName: "app_data",
+      KeyConditionExpression: "PK = :pk AND SK = :sk",
+      ExpressionAttributeValues: {
+        ":pk": "USER#" + email,
+        ":sk": "QUOTA#" + date
+      }
+    };
+
+    const result = await dynamoDB.send(new QueryCommand(params));
+
+    return result.Items?.[0]?.usage || 0;
+  }
 }
 
 module.exports = new UserRepository();

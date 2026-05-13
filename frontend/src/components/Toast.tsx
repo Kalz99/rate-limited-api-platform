@@ -14,8 +14,8 @@ export const Toast: React.FC = () => {
                     className={`
                         px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-xl border flex items-center gap-3
                         animate-in slide-in-from-right fade-in duration-300
-                        ${toast.type === 'success' 
-                            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' 
+                        ${toast.type === 'success'
+                            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
                             : 'bg-rose-500/10 border-rose-500/20 text-rose-400'}
                     `}
                 >
