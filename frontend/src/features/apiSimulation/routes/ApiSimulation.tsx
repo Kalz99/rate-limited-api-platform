@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavBar } from '../../../components/NavBar';
+import { DashboardLayout } from '../../../components/DashboardLayout';
 import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 import { Mail, Lock, Globe, Play } from 'lucide-react';
@@ -16,21 +16,20 @@ export const ApiSimulation: React.FC = () => {
     ];
 
     return (
-        <div className="flex min-h-screen bg-[var(--bg)]">
-            <NavBar />
-            <main className="flex-1 ml-64 p-8">
-                <div className="max-w-5xl mx-auto space-y-8">
-                    {/* Header Section */}
-                    <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
-                        <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
-                            API Simulation
-                        </h2>
-                        <p className="text-lg text-[var(--text)] max-w-3xl">
-                            Test your API integration and rate-limit handling in a controlled environment.
-                        </p>
-                    </div>
+        <DashboardLayout>
+            <div className="max-w-6xl mx-auto space-y-8">
+                {/* Header Section */}
+                <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
+                    <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
+                        API Simulation
+                    </h2>
+                    <p className="text-lg text-[var(--text)] max-w-3xl">
+                        Test your API integration and rate-limit handling in a controlled environment.
+                    </p>
+                </div>
 
 
+                <div className="max-w-5xl mx-auto w-full space-y-8">
                     <ApiTabs
                         options={apiOptions}
                         selected={selectedApi}
@@ -90,7 +89,7 @@ export const ApiSimulation: React.FC = () => {
                         <ResponseConsole />
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </DashboardLayout>
     );
 };

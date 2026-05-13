@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavBar } from '../../../components/NavBar';
+import { DashboardLayout } from '../../../components/DashboardLayout';
 import { EndpointCard } from '../components/EndpointCard';
 import { EndpointCardProps } from '../types';
 
@@ -82,26 +82,23 @@ export const ApiDocumentation: React.FC = () => {
     ];
 
     return (
-        <div className="flex min-h-screen bg-[var(--bg)]">
-            <NavBar />
-            <main className="flex-1 ml-64 p-8">
-                <div className="max-w-5xl mx-auto space-y-8">
-                    <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
-                        <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
-                            API Documentation
-                        </h2>
-                        <p className="text-lg text-[var(--text)] max-w-3xl">
-                            Welcome to the RateGuard API reference. Use these endpoints to integrate our rate-limiting and monitoring capabilities into your own applications.
-                        </p>
-                    </div>
-
-                    <div className="space-y-6">
-                        {endpoints.map((endpoint, i) => (
-                            <EndpointCard key={i} {...endpoint} />
-                        ))}
-                    </div>
+        <DashboardLayout>
+            <div className="max-w-6xl mx-auto space-y-8">
+                <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
+                    <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
+                        API Documentation
+                    </h2>
+                    <p className="text-lg text-[var(--text)] max-w-3xl">
+                        Welcome to the RateGuard API reference. Use these endpoints to integrate our rate-limiting and monitoring capabilities into your own applications.
+                    </p>
                 </div>
-            </main>
-        </div>
+
+                <div className="space-y-6 max-w-4xl mx-auto">
+                    {endpoints.map((endpoint, i) => (
+                        <EndpointCard key={i} {...endpoint} />
+                    ))}
+                </div>
+            </div>
+        </DashboardLayout>
     );
 };

@@ -1,24 +1,23 @@
 import React from 'react';
-import { NavBar } from '../../../components/NavBar';
+import { DashboardLayout } from '../../../components/DashboardLayout';
 import { CardView } from '../components/CardView';
 import { Button } from '../../../components/Button';
 import { Copy, RefreshCcw } from 'lucide-react';
 
 export const ApiKey: React.FC = () => {
     return (
-        <div className="flex min-h-screen bg-[var(--bg)]">
-            <NavBar />
-            <main className="flex-1 ml-64 p-8">
-                <div className="max-w-5xl mx-auto space-y-8">
-                    <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
-                        <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
-                            API Authentication
-                        </h2>
-                        <p className="text-lg text-[var(--text)] max-w-3xl">
-                            Manage your secret keys to authenticate requests to our API.
-                        </p>
-                    </div>
+        <DashboardLayout>
+            <div className="max-w-6xl mx-auto space-y-8">
+                <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
+                    <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
+                        API Authentication
+                    </h2>
+                    <p className="text-lg text-[var(--text)] max-w-3xl">
+                        Manage your secret keys to authenticate requests to our API.
+                    </p>
+                </div>
 
+                <div className="max-w-3xl mx-auto w-full space-y-8">
                     {/* API Key Card View Component */}
                     <CardView
                         title="API key"
@@ -50,7 +49,7 @@ export const ApiKey: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </DashboardLayout>
     );
 };

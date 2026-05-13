@@ -16,7 +16,7 @@ interface ApiTabsProps {
 
 export const ApiTabs: React.FC<ApiTabsProps> = ({ options, selected, onSelect }) => {
     return (
-        <div className="flex bg-[var(--social-bg)] p-1.5 rounded-2xl border border-[var(--border)] w-fit">
+        <div className="flex bg-[var(--social-bg)] p-1.5 rounded-2xl border border-[var(--border)] w-full sm:w-fit overflow-x-auto no-scrollbar">
             {options.map((option) => (
                 <button
                     key={option.id}

@@ -39,9 +39,13 @@ export const CardView: React.FC<CardViewProps> = ({ title, apiKey, copyButton, r
                 </div>
 
                 {/* Bottom: Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4">
-                    {copyButton}
-                    {regenerateButton}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div className="w-full sm:w-auto sm:min-w-[160px]">
+                        {copyButton}
+                    </div>
+                    <div className="w-full sm:w-auto sm:min-w-[160px]">
+                        {regenerateButton}
+                    </div>
                 </div>
             </div>
         </div>

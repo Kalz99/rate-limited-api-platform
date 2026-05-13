@@ -1,4 +1,4 @@
-import { NavBar } from "../../../components/NavBar";
+import { DashboardLayout } from "../../../components/DashboardLayout";
 import { StatCard } from "../components/StatCard";
 import { DaysChart } from "../components/DaysChart";
 import { StatCardProps } from "../types";
@@ -33,34 +33,31 @@ export const Dashboard = () => {
     ];
 
     return (
-        <div className="flex min-h-screen bg-[var(--bg)]">
-            <NavBar />
-            <main className="flex-1 ml-64 p-8">
-                <div className="max-w-5xl mx-auto space-y-8">
-                    {/* Header Section */}
-                    <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
-                        <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
-                            Usage Dashboard
-                        </h2>
-                        <p className="text-lg text-[var(--text)] max-w-3xl">
-                            Monitor your API consumption and rate-limit status in real-time.
-                        </p>
-                    </div>
-
-                    {/* Top Row: Stat Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {stats.map((stat, i) => (
-                            <StatCard key={i} {...stat} />
-                        ))}
-                    </div>
-
-                    {/* Bottom Row: Chart */}
-                    <div className="w-full">
-                        <DaysChart />
-                    </div>
+        <DashboardLayout>
+            <div className="max-w-6xl mx-auto space-y-8">
+                {/* Header Section */}
+                <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
+                    <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
+                        Usage Dashboard
+                    </h2>
+                    <p className="text-lg text-[var(--text)] max-w-3xl">
+                        Monitor your API consumption and rate-limit status in real-time.
+                    </p>
                 </div>
-            </main>
-        </div>
+
+                {/* Top Row: Stat Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {stats.map((stat, i) => (
+                        <StatCard key={i} {...stat} />
+                    ))}
+                </div>
+
+                {/* Bottom Row: Chart */}
+                <div className="w-full">
+                    <DaysChart />
+                </div>
+            </div>
+        </DashboardLayout>
     );
 };
 
