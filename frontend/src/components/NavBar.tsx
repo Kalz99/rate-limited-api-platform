@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Home, Database, Settings, LogOut, ChevronRight, Key, Play, X } from 'lucide-react';
 
+import { useAuthStore } from '../features/auth/store/useAuthStore';
+
 interface NavBarProps {
     isOpen: boolean;
     onClose: () => void;
@@ -9,9 +11,10 @@ interface NavBarProps {
 
 export const NavBar: React.FC<NavBarProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
+    const { user, logout } = useAuthStore();
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
+        logout();
         navigate('/login');
     };
 
@@ -78,13 +81,27 @@ export const NavBar: React.FC<NavBarProps> = ({ isOpen, onClose }) => {
                     </ul>
 
                     <div className="mt-auto pt-4 border-t border-[var(--border)]">
-                        <button
-                            onClick={handleLogout}
-                            className="flex w-full items-center gap-3 p-3 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all duration-200"
-                        >
-                            <LogOut size={22} />
-                            <span className="flex-1 text-left font-medium">Logout</span>
-                        </button>
+                        {user && (
+                            <div className="px-2 flex items-center justify-between rounded-2xl py-2 hover:bg-[var(--accent-bg)]/30 transition-colors">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-full bg-[var(--accent-bg)] border border-[var(--border)] flex items-center justify-center text-[var(--accent)] font-bold shadow-sm">
+                                        {user.username.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div className="flex flex-col min-w-0">
+                                        <span className="text-sm font-bold text-[var(--text-h)] truncate">{user.username}</span>
+                                        <span className="text-[10px] uppercase tracking-wider text-[var(--accent)] font-black opacity-70">{user.plan} plan</span>
+                                    </div>
+                                </div>
+                                
+                                <button
+                                    onClick={handleLogout}
+                                    className="p-2.5 rounded-xl text-[var(--accent)] hover:bg-[var(--accent-bg)] transition-all duration-200"
+                                    title="Logout"
+                                >
+                                    <LogOut size={20} />
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </aside>
