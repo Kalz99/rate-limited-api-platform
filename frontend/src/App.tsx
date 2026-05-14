@@ -7,6 +7,7 @@ import { ApiDocumentation } from "./features/apiDocumentation/routes/ApiDocument
 import { ApiSimulation } from "./features/apiSimulation/routes/ApiSimulation";
 import { ToastProvider } from "./context/ToastContext";
 import { Toast } from "./components/Toast";
+import { Settings } from "./features/profile/routes/Settings";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/api-simulation" element={<ApiSimulation />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </ToastProvider>
