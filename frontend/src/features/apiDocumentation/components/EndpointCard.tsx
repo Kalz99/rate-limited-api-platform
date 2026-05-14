@@ -35,11 +35,11 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({
                 onClick={toggleExpanded}
             >
                 <div className="flex items-center gap-4 flex-1">
-                    <div className={`px-3 py-1 rounded-lg text-xs font-bold border ${methodColors[method]}`}>
+                    <div className={`px-3 py-1 rounded-lg text-xs font-medium border ${methodColors[method]}`}>
                         {method}
                     </div>
                     <div className="flex-1">
-                        <h3 className="text-lg font-bold text-[var(--text-h)] tracking-tight group-hover:text-[var(--accent)] transition-colors">
+                        <h3 className="text-lg font-medium text-[var(--text-h)] tracking-tight group-hover:text-[var(--accent)] transition-colors">
                             {name}
                         </h3>
                         <p className="text-sm text-[var(--text)] font-mono opacity-80 mt-0.5 truncate max-w-2xl">
@@ -73,7 +73,7 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({
                     <div className="mt-6 space-y-8">
                         {/* Description */}
                         <div>
-                            <h4 className="text-sm font-bold text-[var(--text-h)] uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <h4 className="text-sm font-medium text-[var(--text-h)] uppercase tracking-wider mb-2 flex items-center gap-2">
                                 Description
                             </h4>
                             <p className="text-[var(--text)] leading-relaxed">
@@ -84,17 +84,17 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({
                         {/* Parameters */}
                         {parameters.length > 0 && (
                             <div>
-                                <h4 className="text-sm font-bold text-[var(--text-h)] uppercase tracking-wider mb-4">
+                                <h4 className="text-sm font-medium text-[var(--text-h)] uppercase tracking-wider mb-4">
                                     Required Parameters
                                 </h4>
                                 <div className="overflow-x-auto rounded-xl border border-[var(--border)]">
                                     <table className="w-full text-left border-collapse">
                                         <thead className="bg-[var(--accent-bg)]/30">
                                             <tr>
-                                                <th className="px-4 py-3 text-xs font-bold text-[var(--text-h)]">Name</th>
-                                                <th className="px-4 py-3 text-xs font-bold text-[var(--text-h)]">Type</th>
-                                                <th className="px-4 py-3 text-xs font-bold text-[var(--text-h)]">Required</th>
-                                                <th className="px-4 py-3 text-xs font-bold text-[var(--text-h)]">Description</th>
+                                                <th className="px-4 py-3 text-xs font-medium text-[var(--text-h)]">Name</th>
+                                                <th className="px-4 py-3 text-xs font-medium text-[var(--text-h)]">Type</th>
+                                                <th className="px-4 py-3 text-xs font-medium text-[var(--text-h)]">Required</th>
+                                                <th className="px-4 py-3 text-xs font-medium text-[var(--text-h)]">Description</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-[var(--border)]">
@@ -104,7 +104,7 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({
                                                     <td className="px-4 py-3 text-sm text-[var(--text)]">{param.type}</td>
                                                     <td className="px-4 py-3 text-sm text-[var(--text)]">
                                                         {param.required ? 
-                                                            <span className="text-rose-500 font-bold">Yes</span> : 
+                                                            <span className="text-rose-500 font-medium">Yes</span> : 
                                                             <span className="opacity-40">No</span>
                                                         }
                                                     </td>
@@ -120,7 +120,7 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({
                         {/* Headers */}
                         {Object.keys(headers).length > 0 && (
                             <div>
-                                <h4 className="text-sm font-bold text-[var(--text-h)] uppercase tracking-wider mb-4">
+                                <h4 className="text-sm font-medium text-[var(--text-h)] uppercase tracking-wider mb-4">
                                     Headers
                                 </h4>
                                 <div className="bg-[var(--code-bg)] p-4 rounded-xl border border-[var(--border)] font-mono text-sm space-y-1">
@@ -137,7 +137,7 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({
                         {/* Example Response */}
                         {exampleResponse && (
                             <div>
-                                <h4 className="text-sm font-bold text-[var(--text-h)] uppercase tracking-wider mb-4 flex justify-between items-center">
+                                <h4 className="text-sm font-medium text-[var(--text-h)] uppercase tracking-wider mb-4 flex justify-between items-center">
                                     Example Response
                                     <span className="text-[10px] bg-green-500/10 text-green-500 px-2 py-0.5 rounded-full">JSON</span>
                                 </h4>
@@ -152,13 +152,13 @@ export const EndpointCard: React.FC<EndpointCardProps> = ({
                         {/* Status Codes */}
                         {statusCodes.length > 0 && (
                             <div>
-                                <h4 className="text-sm font-bold text-[var(--text-h)] uppercase tracking-wider mb-4">
+                                <h4 className="text-sm font-medium text-[var(--text-h)] uppercase tracking-wider mb-4">
                                     Status Codes
                                 </h4>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     {statusCodes.map((status, i) => (
                                         <div key={i} className="flex items-center gap-3 p-3 rounded-xl border border-[var(--border)] bg-[var(--bg)]">
-                                            <span className={`font-bold px-2 py-1 rounded-lg text-xs ${
+                                            <span className={`font-medium px-2 py-1 rounded-lg text-xs ${
                                                 status.code >= 200 && status.code < 300 ? 'bg-green-500/10 text-green-500' :
                                                 status.code >= 400 ? 'bg-rose-500/10 text-rose-500' : 'bg-amber-500/10 text-amber-500'
                                             }`}>

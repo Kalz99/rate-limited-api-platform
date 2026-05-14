@@ -15,7 +15,7 @@ export const Settings: React.FC = () => {
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Header Section */}
                 <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
-                    <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
+                    <h2 className="text-3xl font-medium text-[var(--text-h)] tracking-tighter">
                         Profile Settings
                     </h2>
                     <p className="text-lg text-[var(--text)] max-w-3xl">
@@ -38,7 +38,7 @@ export const Settings: React.FC = () => {
                                 <div className="p-2.5 rounded-xl bg-[var(--accent-bg)] text-[var(--accent)]">
                                     <Shield size={20} />
                                 </div>
-                                <h3 className="text-xl font-black text-[var(--text-h)]">Account Details</h3>
+                                <h3 className="text-xl font-medium text-[var(--text-h)]">Account Details</h3>
                             </div>
 
                             <div className="flex flex-col gap-8 max-w-xl">

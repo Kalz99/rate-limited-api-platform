@@ -31,7 +31,7 @@ export const ApiSimulation: React.FC = () => {
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Header Section */}
                 <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
-                    <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
+                    <h2 className="text-3xl font-medium text-[var(--text-h)] tracking-tighter">
                         API Simulation
                     </h2>
                     <p className="text-lg text-[var(--text)] max-w-3xl">
@@ -59,7 +59,7 @@ export const ApiSimulation: React.FC = () => {
                                         {apiOptions.find(o => o.id === selectedApi)?.icon}
                                     </div>
                                     <div className="flex flex-col">
-                                        <h3 className="font-bold text-[var(--text-h)] leading-tight">Request Configuration</h3>
+                                        <h3 className="font-medium text-[var(--text-h)] leading-tight">Request Configuration</h3>
                                         <p className="text-xs text-[var(--text)] opacity-70">Endpoint: {apiOptions.find(o => o.id === selectedApi)?.path}</p>
                                     </div>
                                 </div>

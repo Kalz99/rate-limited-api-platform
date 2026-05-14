@@ -22,7 +22,7 @@ export const ApiKey: React.FC = () => {
         <DashboardLayout>
             <div className="max-w-6xl mx-auto space-y-8">
                 <div className="flex flex-col gap-2 border-b border-[var(--border)] pb-8">
-                    <h2 className="text-3xl font-black text-[var(--text-h)] tracking-tighter">
+                    <h2 className="text-3xl font-medium text-[var(--text-h)] tracking-tighter">
                         API Authentication
                     </h2>
                     <p className="text-lg text-[var(--text)] max-w-3xl">

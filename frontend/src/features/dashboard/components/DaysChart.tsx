@@ -41,7 +41,7 @@ export const DaysChart: React.FC = () => {
                         <Calendar size={18} />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-[var(--text-h)]">Request Activity</h3>
+                        <h3 className="text-lg font-medium text-[var(--text-h)]">Request Activity</h3>
                         <p className="text-xs text-[var(--text)]">Daily request volume overview</p>
                     </div>
                 </div>
