@@ -11,3 +11,16 @@ export interface StatCardProps {
         isPositive: boolean;
     };
 }
+
+export interface UsageStats {
+    limit: number;
+    usage: number;
+    todayUsage: number;
+}
+
+export interface UseDashboardStatsReturn {
+    stats: UsageStats | null;
+    loading: boolean;
+    error: string | null;
+}
+

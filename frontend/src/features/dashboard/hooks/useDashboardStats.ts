@@ -1,17 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUsage, getTodayUsage } from "../api/dashboardApi";
+import { UseDashboardStatsReturn, UsageStats } from "../types";
 
-interface UsageStats {
-    limit: number;
-    usage: number;
-    todayUsage: number;
-}
-
-interface UseDashboardStatsReturn {
-    stats: UsageStats | null;
-    loading: boolean;
-    error: string | null;
-}
 
 export const useDashboardStats = (): UseDashboardStatsReturn => {
     const [stats, setStats] = useState<UsageStats | null>(null);

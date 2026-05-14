@@ -8,3 +8,7 @@ export const login = (data: any) => {
 export const register = (data: any) => {
     return apiClient.post("/register", data);
 };
+
+export const getUser = () => {
+    return apiClient.get("/me");
+};
