@@ -1,18 +1,6 @@
 import React from 'react';
 
-export type ApiType = 'email' | 'password' | 'ip';
-
-interface ApiOption {
-    id: ApiType;
-    label: string;
-    icon: React.ReactNode;
-}
-
-interface ApiTabsProps {
-    options: ApiOption[];
-    selected: ApiType;
-    onSelect: (id: ApiType) => void;
-}
+import { ApiType, ApiTabsProps } from '../types';
 
 export const ApiTabs: React.FC<ApiTabsProps> = ({ options, selected, onSelect }) => {
     return (

@@ -3,11 +3,22 @@ import { DashboardLayout } from '../../../components/DashboardLayout';
 import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 import { Mail, Lock, Globe, Play } from 'lucide-react';
-import { ApiTabs, ApiType } from '../components/ApiTabs';
+import { ApiTabs } from '../components/ApiTabs';
+import { ApiType } from '../types';
 import { ResponseConsole } from '../components/ResponseConsole';
 
+import { useApiSimulation } from '../hooks/useApiSimulation';
+
 export const ApiSimulation: React.FC = () => {
-    const [selectedApi, setSelectedApi] = useState<ApiType>('email');
+    const {
+        selectedApi,
+        setSelectedApi,
+        inputs,
+        handleInputChange,
+        response,
+        isLoading,
+        handleRunSimulation
+    } = useApiSimulation();
 
     const apiOptions = [
         { id: 'email' as ApiType, label: 'Email Validation', path: 'api/email/validate', icon: <Mail size={18} /> },
@@ -58,6 +69,8 @@ export const ApiSimulation: React.FC = () => {
                                         label="Email Address"
                                         placeholder="Enter email to validate (e.g. test@example.com)"
                                         type="email"
+                                        value={inputs.email}
+                                        onChange={(e) => handleInputChange('email', e.target.value)}
                                     />
                                 )}
 
@@ -66,6 +79,8 @@ export const ApiSimulation: React.FC = () => {
                                         label="Password"
                                         placeholder="Enter password to check strength"
                                         type="password"
+                                        value={inputs.password}
+                                        onChange={(e) => handleInputChange('password', e.target.value)}
                                     />
                                 )}
 
@@ -74,19 +89,28 @@ export const ApiSimulation: React.FC = () => {
                                         label="IP Address"
                                         placeholder="Enter IP address (e.g. 192.168.1.1)"
                                         type="text"
+                                        value={inputs.ip}
+                                        onChange={(e) => handleInputChange('ip', e.target.value)}
                                     />
                                 )}
 
-                                <Button className="mt-4">
-                                    <Play size={18} />
-                                    Run Simulation
+                                <Button
+                                    className="mt-4"
+                                    onClick={handleRunSimulation}
+                                    disabled={isLoading}
+                                >
+                                    <Play size={18} className={isLoading ? 'animate-pulse' : ''} />
+                                    {isLoading ? 'Running...' : 'Run Simulation'}
                                 </Button>
 
                             </div>
                         </div>
 
 
-                        <ResponseConsole />
+                        <ResponseConsole
+                            response={response}
+                            isLoading={isLoading}
+                        />
                     </div>
                 </div>
             </div>

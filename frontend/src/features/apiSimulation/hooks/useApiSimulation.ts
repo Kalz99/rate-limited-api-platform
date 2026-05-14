@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { ApiType } from '../components/ApiTabs';
+import { ApiType } from '../types';
+import { validateEmail, checkPassword, checkIP } from '../api/simulation';
 
 export const useApiSimulation = () => {
     const [selectedApi, setSelectedApi] = useState<ApiType>('email');
+    const [response, setResponse] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [inputs, setInputs] = useState({
         email: '',
         password: '',
@@ -16,18 +19,26 @@ export const useApiSimulation = () => {
         }));
     };
 
-    const handleRunSimulation = () => {
+    const handleRunSimulation = async () => {
         const currentValue = inputs[selectedApi as keyof typeof inputs];
-        console.log(`Running simulation for: ${selectedApi}`);
-        console.log(`Endpoint: /api/${selectedApi === 'email' ? 'email/validate' : selectedApi === 'password' ? 'password/check' : 'ip/info'}`);
-        console.log(`Payload:`, { [selectedApi]: currentValue });
-        
-        // This will be expanded later with actual API calls
-        return {
-            api: selectedApi,
-            value: currentValue,
-            timestamp: new Date().toISOString()
-        };
+        setIsLoading(true);
+        setResponse(null);
+
+        try {
+            let res;
+            if (selectedApi === 'email') {
+                res = await validateEmail(inputs.email);
+            } else if (selectedApi === 'password') {
+                res = await checkPassword(inputs.password);
+            } else {
+                res = await checkIP(inputs.ip);
+            }
+            setResponse(res.data);
+        } catch (error: any) {
+            setResponse(error.response?.data || { error: 'An unexpected error occurred' });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return {
@@ -35,6 +46,8 @@ export const useApiSimulation = () => {
         setSelectedApi,
         inputs,
         handleInputChange,
+        response,
+        isLoading,
         handleRunSimulation
     };
 };
