@@ -4,7 +4,6 @@ export const validateEmail = (email: string) => {
     return apiClient.post("api/email/validate?email=" + email);
 };
 
-
 export const checkPassword = (password: string) => {
     return apiClient.post("api/password/check", { password });
 };
